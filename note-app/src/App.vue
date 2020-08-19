@@ -6,36 +6,34 @@
       <v-form>
         <v-container>
           <h1>{{ title }}</h1>
-           <!-- message error -->
-           <div>
-             <messages v-if="message" :message="message"/>
-           </div>
+          <!-- module message error -->
+          <div>
+            <messages v-if="message" :message="message"/>
+          </div>
+          <!-- module new note-->
+          <div>
+            <NewNote
+                :note="note"
+                @newNote="addNote"
 
-            <!-- new note -->
-          <v-layout column wrap>
-            <v-flex xs12 sm6 md3>
-              <v-text-field v-model="note.title" type="text"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 md3>
-              <v-text-field v-model="note.descr"></v-text-field>
-            </v-flex>
-            <!-- button -->
-            <div class="text-center">
-              <v-btn rounded color="primary" dark @click="addNote"
-                >New note</v-btn
-              >
-            </div>
-            <!-- list notes -->
-            <div>
-              <v-list class="note" v-for="(note, index) in notes" :key="index">
-                <v-list-item class="font-weight-black">{{
+            />
+          </div>
+
+          <!-- new note -->
+
+
+          <!-- list notes -->
+          <div>
+            <v-list class="note" v-for="(note, index) in notes" :key="index">
+              <v-list-item class="font-weight-black">{{
                   note.title
-                }}</v-list-item>
-                <v-list-item>{{ note.descr }}</v-list-item>
-                <v-list-item>{{ note.date }}</v-list-item>
-              </v-list>
-            </div>
-          </v-layout>
+                }}
+              </v-list-item>
+              <v-list-item>{{ note.descr }}</v-list-item>
+              <v-list-item>{{ note.date }}</v-list-item>
+            </v-list>
+          </div>
+
         </v-container>
       </v-form>
     </div>
@@ -44,11 +42,14 @@
 
 <script>
 import Messages from "@/components/Messages.vue"
+import NewNote from "@/components/NewNote.vue"
+
 export default {
   name: "App",
 
   components: {
-    Messages
+    Messages,
+    NewNote
   },
 
   data: () => ({
@@ -80,7 +81,7 @@ export default {
   methods: {
     addNote() {
       // console.log(this.note)
-      let { title, descr } = this.note;
+      let {title, descr} = this.note;
 
       if (title === "") {
         this.message = "title can`t be blank!";
